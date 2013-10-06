@@ -31,6 +31,7 @@ var exec       = require("child_process").exec ;
 
 // CONSTANTS
 var LOG_VERBOSE = true ;
+var SERVE_STATIC = false ;
 
 // get process id
 var pid = process.getgid() ;
@@ -70,18 +71,18 @@ log("pageserver.js") ;
 fs.stat(documentRoot, function(err, stats) {
 
     if (stats && stats.isDirectory()) {
-       /*
-        // The folder exists
-        // launch static page http daemon
-        connect.createServer(
-            connect.logger({ format: "\x1b[35m" + project + ":\x1b[37m :remote-addr :method :status :url :response-time" })
-          , connect.compress()
-          , connect.static(documentRoot)
-        ).listen(port) ;
 
-        log("static content serving from " + documentRoot ) ;
-        log("http on " + port ) ;
-        */
+        if (SERVE_STATIC) {
+
+            connect.createServer(
+                connect.logger({ format: "\x1b[35m" + project + ":\x1b[37m :remote-addr :method :status :url :response-time" })
+            , connect.compress()
+            , connect.static(documentRoot)
+            ).listen(port) ;
+
+            log("static content serving from " + documentRoot ) ;
+            log("http on " + port ) ;
+        }
 
         // launch github webhook api listener
         connect.createServer(
