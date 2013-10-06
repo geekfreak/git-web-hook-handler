@@ -65,6 +65,7 @@ var gitHookPort  = process.argv[4] || 1 + port * 1 ;
 var workspace = path.resolve(__dirname, '..') ;
 
 // documentRoot is the folder http content is served from.
+// rename ==> repositoryContainer
 var documentRoot = path.join(workspace, project) ;
 
 log("pageserver.js") ;
@@ -73,7 +74,7 @@ log("pageserver.js") ;
 fs.stat(documentRoot, function(err, stats) { 
     
     if (stats && stats.isDirectory()) {      
-        
+       /* 
         // The folder exists
         // launch static page http daemon
         connect.createServer(
@@ -84,7 +85,8 @@ fs.stat(documentRoot, function(err, stats) {
         
         log("static content serving from " + documentRoot ) ;
         log("http on " + port ) ;
-
+        */
+        
         // launch github webhook api listener                     
         connect.createServer(
             connect.favicon()
