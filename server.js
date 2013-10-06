@@ -7,7 +7,7 @@ var sys        = require("sys") ;
 var exec       = require("child_process").exec ;
 
 // CONSTANTS
-var LOG_VERBOSE = false ;
+var LOG_VERBOSE = true ;
 
 // get process id
 var pid        = process.getgid() ;
@@ -39,8 +39,10 @@ var port         = process.argv[3] || 8888 ;
 //    : use next incremental port number if none provided 
 var gitHookPort  = process.argv[4] || 1 + port * 1 ;
 
+var workspace = path.resolve(__dirname, '..') ;
+
 // documentRoot is the folder http content is served from.
-var documentRoot = path.join(__dirname, project) ;
+var documentRoot = path.join(workspace, project) ;
 
 log("pageserver.js") ;
 
@@ -92,6 +94,6 @@ fs.stat(documentRoot, function(err, stats) {
         log("githook listener on " + gitHookPort ) ;
  
     } else {
-        log("\x1b[31mInvalid project:\x1b[39m" + project ) ;
+        log("\x1b[31mInvalid project:\x1b[39m" + project + " : " + documentRoot) ;
     }
 }) ; 
