@@ -36,7 +36,7 @@ var LOG_VERBOSE = true ;
 var pid = process.getgid() ;
 
 var log = function(message) {
-    
+
     var clrBlack     = "\x1b[30m" ; // Black
     var clrGrey      = "\x1b[90m" ; // Grey
     var clrLightGrey = "\x1b[37m" ; // Light Grey
@@ -47,20 +47,16 @@ var log = function(message) {
     var clrYellow    = "\x1b[33m" ; // Yellow
     var clrViolet    = "\x1b[35m" ; // Violet
     var clrCyan      = "\x1b[36m" ; // Cyan
-       
+
     console.log(clrGrey + pid + ":" + clrLightGrey + message) ;
 }
 
 // commandline must contain a project name
 var project = process.argv[2] || process.exit(1) ;
 
-// set the port to listen for http traffic on 
-//    : use 8888 as default if none provided
-var port = process.argv[3] || 8888 ;
-
-// set the port to listen for github hooks on 
-//    : use next incremental port number if none provided 
-var gitHookPort  = process.argv[4] || 1 + port * 1 ;
+// set the port to listen for github hooks on
+//    : use next incremental port number if none provided
+var gitHookPort = process.argv[3] || 8888 ;
 
 var workspace = path.resolve(__dirname, '..') ;
 
@@ -71,10 +67,10 @@ var documentRoot = path.join(workspace, project) ;
 log("pageserver.js") ;
 
 // verify documentRoot exists
-fs.stat(documentRoot, function(err, stats) { 
-    
-    if (stats && stats.isDirectory()) {      
-       /* 
+fs.stat(documentRoot, function(err, stats) {
+
+    if (stats && stats.isDirectory()) {
+       /*
         // The folder exists
         // launch static page http daemon
         connect.createServer(
@@ -82,12 +78,12 @@ fs.stat(documentRoot, function(err, stats) {
           , connect.compress()
           , connect.static(documentRoot)
         ).listen(port) ;
-        
+
         log("static content serving from " + documentRoot ) ;
         log("http on " + port ) ;
         */
-        
-        // launch github webhook api listener                     
+
+        // launch github webhook api listener
         connect.createServer(
             connect.favicon()
           , connect.logger({ format: "\x1b[31mgithub:\x1b[39m :remote-addr :method :status :url :response-time" })
@@ -117,9 +113,9 @@ fs.stat(documentRoot, function(err, stats) {
               }
             }
         ).listen(gitHookPort) ;
-        
+
         log("githook listener on " + gitHookPort ) ;
     } else {
         log("\x1b[31mInvalid project:\x1b[39m" + project + " : " + documentRoot) ;
     }
-}) ; 
+}) ;
