@@ -24,17 +24,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 var connect    = require("connect") ;
 var path       = require("path") ;
 var fs         = require("fs") ;
-var qs         = require("querystring") ;
-
-var sys        = require("sys") ;
 var exec       = require("child_process").exec ;
 
 // CONSTANTS
 var LOG_VERBOSE = false ;
 var SERVE_STATIC = false ;
-
-// get process id
-var pid = process.getgid() ;
 
 var log = function(message) {
 
@@ -49,7 +43,7 @@ var log = function(message) {
     var clrViolet    = "\x1b[35m" ; // Violet
     var clrCyan      = "\x1b[36m" ; // Cyan
 
-    console.log(clrGrey + pid + ":" + clrLightGrey + message) ;
+    console.log(clrGrey + process.pid + ":" + clrLightGrey + message) ;
 }
 
 // commandline must contain a project name
@@ -91,7 +85,9 @@ fs.stat(documentRoot, function(err, stats) {
           , connect.bodyParser()
           , function(request, response) {
               var postReceiveMessage = JSON.parse(request.body.payload || {} ) ;
+
               LOG_VERBOSE && log(JSON.stringify(postReceiveMessage)) ;
+
               if (postReceiveMessage.repository.name !== project) {
                   response.writeHead(404, {
                       "Content-Type": "text/plain"
@@ -102,8 +98,10 @@ fs.stat(documentRoot, function(err, stats) {
                   log("githook trigger for " + postReceiveMessage.repository.name) ;
                   process.chdir(documentRoot) ;
                   child = exec("git pull", function (error, stdout, stderr) {
+
                     LOG_VERBOSE && log("stdout: " + stdout) ;
                     LOG_VERBOSE && log("stderr: " + stderr) ;
+
                     if (error !== null) {
                         log("exec error: " + error) ;
                     } else {
