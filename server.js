@@ -30,7 +30,7 @@ var sys        = require("sys") ;
 var exec       = require("child_process").exec ;
 
 // CONSTANTS
-var LOG_VERBOSE = true ;
+var LOG_VERBOSE = false ;
 var SERVE_STATIC = false ;
 
 // get process id
