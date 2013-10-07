@@ -46,7 +46,7 @@ var log = function(message) {
     var clrViolet    = "\x1b[35m" ; // Violet
     var clrCyan      = "\x1b[36m" ; // Cyan
 
-    console.log(clrGrey + process.pid + ":" + clrLightGrey + message + clrFgReset) ;
+    console.log(clrGrey + new Date().toString().split(" ")[4] + "[" + process.pid + '] ' + clrLightGrey + message + clrFgReset) ;
 }
 
 // commandline must contain a project name
