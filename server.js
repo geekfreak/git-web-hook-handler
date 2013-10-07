@@ -32,18 +32,21 @@ var SERVE_STATIC = false ;
 
 var log = function(message) {
 
+    var clrFgReset   = "\x1b[39m" ; // reset
+
     var clrBlack     = "\x1b[30m" ; // Black
     var clrGrey      = "\x1b[90m" ; // Grey
     var clrLightGrey = "\x1b[37m" ; // Light Grey
-    var clrWhite     = "\x1b[39m" ; // White
+
     var clrRed       = "\x1b[31m" ; // Red
     var clrGreen     = "\x1b[32m" ; // Green
     var clrBlue      = "\x1b[34m" ; // Blue
+
     var clrYellow    = "\x1b[33m" ; // Yellow
     var clrViolet    = "\x1b[35m" ; // Violet
     var clrCyan      = "\x1b[36m" ; // Cyan
 
-    console.log(clrGrey + process.pid + ":" + clrLightGrey + message) ;
+    console.log(clrGrey + process.pid + ":" + clrLightGrey + message + clrFgReset) ;
 }
 
 // commandline must contain a project name
