@@ -27,27 +27,30 @@ var fs         = require("fs") ;
 var exec       = require("child_process").exec ;
 
 // CONSTANTS
-var LOG_VERBOSE = false ;
+var LOG_ENABLED  = true ;
+var LOG_VERBOSE  = true ;
 var SERVE_STATIC = false ;
 
-var log = function(message) {
+var log = function log() {
+  
+  var ink = {
+    reset     : "\x1b[39m"
+  , black     : "\x1b[30m"
+  , red       : "\x1b[31m"
+  , green     : "\x1b[32m"
+  , yellow    : "\x1b[33m"
+  , blue      : "\x1b[34m"
+  , violet    : "\x1b[35m"
+  , cyan      : "\x1b[36m"
+  , lightGrey : "\x1b[37m"
+  , grey      : "\x1b[90m"     
+  }
 
-    var clrFgReset   = "\x1b[39m" ; // reset
-
-    var clrBlack     = "\x1b[30m" ; // Black
-    var clrGrey      = "\x1b[90m" ; // Grey
-    var clrLightGrey = "\x1b[37m" ; // Light Grey
-
-    var clrRed       = "\x1b[31m" ; // Red
-    var clrGreen     = "\x1b[32m" ; // Green
-    var clrBlue      = "\x1b[34m" ; // Blue
-
-    var clrYellow    = "\x1b[33m" ; // Yellow
-    var clrViolet    = "\x1b[35m" ; // Violet
-    var clrCyan      = "\x1b[36m" ; // Cyan
-
-    console.log(clrGrey + new Date().toString().split(" ")[4] + "[" + process.pid + '] ' + clrLightGrey + message + clrFgReset) ;
-}
+  var message = Array.prototype.slice.call(arguments).join(ink.cyan+' , '+ink.reset);
+  
+  LOG_ENABLED && console.log(ink.blue + new Date().toString().split(" ")[4] + ink.violet + " [" + process.pid + '] ' + ink.reset + message + ink.reset) ;
+    
+} ;
 
 // commandline must contain a project name
 var project = process.argv[2] || process.exit(1) ;
