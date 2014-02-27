@@ -29,7 +29,8 @@ var exec       = require("child_process").exec ;
 // CONSTANTS
 var LOG_ENABLED  = true ;
 var LOG_VERBOSE  = true ;
-var SERVE_STATIC = false ;
+var SERVE_STATIC = true ;
+var HTTP_PORT    = 8080 ;
 
 var log = function log() {
   
@@ -78,10 +79,10 @@ fs.stat(documentRoot, function(err, stats) {
                 connect.logger({ format: "\x1b[35m" + project + ":\x1b[37m :remote-addr :method :status :url :response-time" })
             , connect.compress()
             , connect.static(documentRoot)
-            ).listen(port) ;
+            ).listen(HTTP_PORT) ;
 
             log("static content serving from " + documentRoot ) ;
-            log("http on " + port ) ;
+            log("http on " + HTTP_PORT ) ;
         }
 
         // launch github webhook api listener
