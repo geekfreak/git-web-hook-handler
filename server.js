@@ -31,7 +31,7 @@ var LOG_ENABLED  = true ;
 var LOG_VERBOSE  = true ;
 var SERVE_STATIC = true ;
 var HTTP_PORT    = 8080 ;
-var WEBHOOK_PORT    = HTTP_PORT + 1 ;
+var WEBHOOK_PORT = HTTP_PORT + 1 ;
 
 var log = function log() {
   
