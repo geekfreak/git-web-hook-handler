@@ -66,7 +66,7 @@ var workspace = path.resolve(__dirname, '..') ;
 // rename ==> repositoryContainer
 var documentRoot = path.join(workspace, project) ;
 
-log("pageserver.js") ;
+log(["project:",project].join(" ")) ;
 
 // verify documentRoot exists
 fs.stat(documentRoot, function(err, stats) {
@@ -117,7 +117,8 @@ fs.stat(documentRoot, function(err, stats) {
                   }) ;
                   process.chdir(__dirname) ;
               }
-            }
+
+          }
         ).listen(gitHookPort) ;
 
         log("githook listener on " + gitHookPort ) ;
