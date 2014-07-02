@@ -31,6 +31,7 @@ var LOG_ENABLED  = true ;
 var LOG_VERBOSE  = true ;
 var SERVE_STATIC = true ;
 var HTTP_PORT    = 8080 ;
+var WEBHOOK_PORT    = HTTP_PORT + 1 ;
 
 var log = function log() {
   
@@ -58,7 +59,7 @@ var project = process.argv[2] || process.exit(1) ;
 
 // set the port to listen for github hooks on
 //    : use next incremental port number if none provided
-var gitHookPort = process.argv[3] || 8888 ;
+var gitHookPort = process.argv[3] || WEBHOOK_PORT ;
 
 var workspace = path.resolve(__dirname, '..') ;
 
