@@ -21,7 +21,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **********************************************************************************/
 
-var connect    = require("connect") ;
+var connect    = require("connect") ; // deprecated
 var path       = require("path") ;
 var fs         = require("fs") ;
 var exec       = require("child_process").exec ;
@@ -76,7 +76,7 @@ fs.stat(documentRoot, function(err, stats) {
 
         if (SERVE_STATIC) {
 
-            connect.createServer(
+            connect.createServer( //deprecated
                 connect.logger({ format: "\x1b[35m" + project + ":\x1b[37m :remote-addr :method :status :url :response-time" })
             , connect.compress()
             , connect.static(documentRoot)
@@ -87,7 +87,7 @@ fs.stat(documentRoot, function(err, stats) {
         }
 
         // launch github webhook api listener
-        connect.createServer(
+        connect.createServer( // deprecated
             connect.favicon()
           , connect.logger({ format: "\x1b[31mgithub:\x1b[39m :remote-addr :method :status :url :response-time" })
           , connect.bodyParser()
