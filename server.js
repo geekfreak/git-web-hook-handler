@@ -35,17 +35,21 @@ var WEBHOOK_PORT = HTTP_PORT + 1 ;
 
 var log = function log() {
   
+  var setColor = function setColor(val) {
+    return '\x1b['+val+'m'
+  }; 
+  
   var ink = {
-    reset     : "\x1b[39m"
-  , black     : "\x1b[30m"
-  , red       : "\x1b[31m"
-  , green     : "\x1b[32m"
-  , yellow    : "\x1b[33m"
-  , blue      : "\x1b[34m"
-  , violet    : "\x1b[35m"
-  , cyan      : "\x1b[36m"
-  , lightGrey : "\x1b[37m"
-  , grey      : "\x1b[90m"     
+    reset     : setColor(39)
+  , black     : setColor(30)
+  , red       : setColor(31)
+  , green     : setColor(32)
+  , yellow    : setColor(33)
+  , blue      : setColor(34)
+  , violet    : setColor(35)
+  , cyan      : setColor(36)
+  , lightGrey : setColor(37)
+  , grey      : setColor(90)
   }
 
   var message = Array.prototype.slice.call(arguments).join(ink.cyan+' , '+ink.reset);
@@ -77,7 +81,7 @@ fs.stat(documentRoot, function(err, stats) {
         if (SERVE_STATIC) {
 
             connect.createServer( //deprecated
-                connect.logger({ format: "\x1b[35m" + project + ":\x1b[37m :remote-addr :method :status :url :response-time" })
+              connect.logger({ format: "\x1b[35m" + project + ":\x1b[37m :remote-addr :method :status :url :response-time" })
             , connect.compress()
             , connect.static(documentRoot)
             ).listen(HTTP_PORT) ;
