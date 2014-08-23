@@ -1,4 +1,5 @@
-/*********************************************************************************
+/******************************************************************************\
+
 The MIT License (MIT)
 
 Copyright (c) 2013   ʞɐǝɹɟʞǝǝƃ
@@ -19,32 +20,33 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-**********************************************************************************/
+
+\******************************************************************************/
 // CONSTANTS
 const LOG_VERBOSE       = true ;
 const SERVE_STATIC      = true ;
 const HTTP_PORT         = 8080 ;
 // koa app server
-var koa                 = require("koa") ;                                      // https://github.com/koajs/koa
+var koa                 = require("koa") ;                 // https://github.com/koajs/koa
 // koa modules
-var staticServer        = require("koa-static") ;                               // https://github.com/koajs/static
-var httpLogger          = require("koa-http-logger") ;                          // https://github.com/vesln/koa-http-logger
-var router              = require("koa-route") ;                                // https://github.com/koajs/route
-var gzip                = require("koa-gzip") ;                                 // https://github.com/node-modules/koa-gzip
+var staticServer        = require("koa-static") ;          // https://github.com/koajs/static
+var httpLogger          = require("koa-http-logger") ;     // https://github.com/vesln/koa-http-logger
+var router              = require("koa-route") ;           // https://github.com/koajs/route
+var gzip                = require("koa-gzip") ;            // https://github.com/node-modules/koa-gzip
 // node utils
-var _                   = require('underscore') ;                               // http://underscorejs.org/
-var parse               = require('co-body') ;                                  // https://github.com/visionmedia/co-body
-var Promise             = require("bluebird") ;                                 // https://github.com/petkaantonov/bluebird
-var colors              = require("ccolors") ;                                  // https://github.com/kolodny/ccolors
-var path                = require("path") ;                                     // http://nodejs.org/docs/v0.4.9/api/path.html
-var exec                = require("child_process").exec ;                       // http://nodejs.org/api/child_process.html
+var _                   = require('underscore') ;          // http://underscorejs.org/
+var parse               = require('co-body') ;             // https://github.com/visionmedia/co-body
+var Promise             = require("bluebird") ;            // https://github.com/petkaantonov/bluebird
+var colors              = require("ccolors") ;             // https://github.com/kolodny/ccolors
+var path                = require("path") ;                // http://nodejs.org/docs/v0.4.9/api/path.html
+var exec                = require("child_process").exec ;  // http://nodejs.org/api/child_process.html
 // debug wrappers
-var debug               = require('debug')('koa-static') ;                      // https://github.com/visionmedia/debug
+var debug               = require('debug')('koa-static') ; // https://github.com/visionmedia/debug
 var _log                = require('debug')('gwhh') ;
 var _verbose            = require('debug')('verbose') ;
+// wrap fs in Promise/A api
 
 var fs                  = Promise.promisifyAll(require("fs") ) ;
-
 var project             = process.argv[2] || process.exit(1) ;  // commandline must contain a project name
 var gitHookPort         = process.argv[3] || -1 ;               // set the port to listen for github hooks on
 var workspace           = path.resolve(__dirname, '..') ;       // ??bit wonky??
@@ -83,7 +85,7 @@ fs.stat(repositoryContainer, function(err, repoStats) { // ? Promise style ??
 
     if (!~gitHookPort) {  // Sentinel Detected
 
-      log("githook listener disabled ".grey ) ;
+      log("githook listener disabled ".blackHi ) ;
 
     } else {
 
