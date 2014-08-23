@@ -21,7 +21,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **********************************************************************************/
 
-var connect    = require("connect") ;
+var connect    = require("connect") ; // deprecated
 var path       = require("path") ;
 var fs         = require("fs") ;
 var exec       = require("child_process").exec ;
@@ -31,20 +31,25 @@ var LOG_ENABLED  = true ;
 var LOG_VERBOSE  = true ;
 var SERVE_STATIC = true ;
 var HTTP_PORT    = 8080 ;
+var WEBHOOK_PORT = HTTP_PORT + 1 ;
 
 var log = function log() {
   
+  var setColor = function setColor(val) {
+    return '\x1b['+val+'m'
+  }; 
+  
   var ink = {
-    reset     : "\x1b[39m"
-  , black     : "\x1b[30m"
-  , red       : "\x1b[31m"
-  , green     : "\x1b[32m"
-  , yellow    : "\x1b[33m"
-  , blue      : "\x1b[34m"
-  , violet    : "\x1b[35m"
-  , cyan      : "\x1b[36m"
-  , lightGrey : "\x1b[37m"
-  , grey      : "\x1b[90m"     
+    reset     : setColor(39)
+  , black     : setColor(30)
+  , red       : setColor(31)
+  , green     : setColor(32)
+  , yellow    : setColor(33)
+  , blue      : setColor(34)
+  , violet    : setColor(35)
+  , cyan      : setColor(36)
+  , lightGrey : setColor(37)
+  , grey      : setColor(90)
   }
 
   var message = Array.prototype.slice.call(arguments).join(ink.cyan+' , '+ink.reset);
@@ -58,7 +63,7 @@ var project = process.argv[2] || process.exit(1) ;
 
 // set the port to listen for github hooks on
 //    : use next incremental port number if none provided
-var gitHookPort = process.argv[3] || 8888 ;
+var gitHookPort = process.argv[3] || WEBHOOK_PORT ;
 
 var workspace = path.resolve(__dirname, '..') ;
 
@@ -66,7 +71,7 @@ var workspace = path.resolve(__dirname, '..') ;
 // rename ==> repositoryContainer
 var documentRoot = path.join(workspace, project) ;
 
-log("pageserver.js") ;
+log(["project:",project].join(" ")) ;
 
 // verify documentRoot exists
 fs.stat(documentRoot, function(err, stats) {
@@ -75,8 +80,8 @@ fs.stat(documentRoot, function(err, stats) {
 
         if (SERVE_STATIC) {
 
-            connect.createServer(
-                connect.logger({ format: "\x1b[35m" + project + ":\x1b[37m :remote-addr :method :status :url :response-time" })
+            connect.createServer( //deprecated
+              connect.logger({ format: "\x1b[35m" + project + ":\x1b[37m :remote-addr :method :status :url :response-time" })
             , connect.compress()
             , connect.static(documentRoot)
             ).listen(HTTP_PORT) ;
@@ -86,7 +91,7 @@ fs.stat(documentRoot, function(err, stats) {
         }
 
         // launch github webhook api listener
-        connect.createServer(
+        connect.createServer( // deprecated
             connect.favicon()
           , connect.logger({ format: "\x1b[31mgithub:\x1b[39m :remote-addr :method :status :url :response-time" })
           , connect.bodyParser()
@@ -117,7 +122,8 @@ fs.stat(documentRoot, function(err, stats) {
                   }) ;
                   process.chdir(__dirname) ;
               }
-            }
+
+          }
         ).listen(gitHookPort) ;
 
         log("githook listener on " + gitHookPort ) ;

@@ -1,0 +1,7 @@
+{
+    "name": "git-web-hook-handler",
+    "version": "0.1.0",
+    "devDependencies": {
+        "connect": "~2.21.1"
+    }
+}
