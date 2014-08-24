@@ -1,7 +1,30 @@
 {
-    "name": "git-web-hook-handler",
-    "version": "0.1.0",
-    "devDependencies": {
-        "connect": "~2.21.1"
-    }
+  "name"        : "git-web-hook-handler",
+  "version"     : "0.1.0",
+  "description" : "little webserver and github webhook listener",
+
+  "repository": {
+    "type" : "git",
+    "url"  : "git://github.com/geekfreak/git-web-hook-handler.git"
+  } ,
+
+  "devDependencies": {
+    "koa"                : "~0.10.0",
+    "koa-gzip"           : "~0.1.0",
+    "koa-static"         : "~1.4.6",
+    "koa-http-logger"    : "~0.1.0",
+    "koa-route"          : "~2.1.0",
+    "underscore"         : "~1.3.3",
+    "co-body"            : "~1.0.0",
+    "bluebird"           : "~2.3.0",
+    "ccolors"            : "~0.3.0",
+    "debug"              : "~1.0.4",
+    "js-beautify"        : "~1.4.2",
+    "grunt"              : "~0.4.5",
+    "grunt-execute"      : "~0.1.5",
+    "grunt-eslint"       : "~0.3.2",
+    "grunt-jsbeautifier" : "~0.2.7",
+    "grunt-jscs-checker" : "~0.4.1"
+  }
+
 }
